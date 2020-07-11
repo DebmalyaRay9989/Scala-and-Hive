@@ -12,7 +12,7 @@ Create external table
 comments(id int,
 userid int)
 row format delimited
-fields terminated by ',' location '/tmp/comments';
+fields terminated by ',' location 'tmp/comments';
 
 create external table posts (
 id int,
@@ -25,13 +25,13 @@ title string,
 answercount int,
 commentcount smallint)        
 row format delimited
-fields terminated by ',' location '/tmp/comments';
+fields terminated by ',' location 'tmp/comments';
 
 create external table posttypes (
 id int,
 name string)
 row format delimited
-fields terminated by ',' location '/tmp/posttypes';
+fields terminated by ',' location 'tmp/posttypes';
 
 create external table users (
 id int,
@@ -41,7 +41,7 @@ loc string,
 age tinyint  
 )
 row format delimited
-fields terminated by ',' location '/tmp/users';
+fields terminated by ',' location 'tmp/users';
 
 #A. Find the display name and no. of posts created by the user who has got maximum reputation.
 select displayname,reputation from users group by displayname,reputation order by reputation desc; 
