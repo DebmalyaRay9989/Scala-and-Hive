@@ -1,0 +1,79 @@
+-----------------------------------------------------------------------------------------------------------------------------------
+
+# StackOverFlow with dataset files as comments,posts,posttypes,users
+
+# Create Database and External table
+
+-- Create database ADIDAS;
+
+-- USE ADIDAS;
+
+Create external table
+comments(id int,
+userid int)
+row format delimited
+fields terminated by ',' location '/tmp/comments';
+
+create external table posts (
+id int,
+post_type smallint,
+creationdate timestamp,
+score int,
+viewcount int,
+owneruserid smallint,
+title string,
+answercount int,
+commentcount smallint)        
+row format delimited
+fields terminated by ',' location '/tmp/comments';
+
+create external table posttypes (
+id int,
+name string)
+row format delimited
+fields terminated by ',' location '/tmp/posttypes';
+
+create external table users (
+id int,
+reputation int,
+displayname string,
+loc string,
+age tinyint  
+)
+row format delimited
+fields terminated by ',' location '/tmp/users';
+
+#A. Find the display name and no. of posts created by the user who has got maximum reputation.
+select displayname,reputation from users group by displayname,reputation order by reputation desc; 
+
+#B. Find the average age of users on the Stack Overflow site.
+select avg(age) from users;
+
+#C. Find the display name of user who posted the oldest post on Stack Overflow (in terms of date).
+select u.displayname,p.creationdate from users u join posts p on (u.id = p.owneruserid) order by p.creationdate;
+
+#D. Find the display name and no. of comments done by the user who has got maximum reputation.
+select u.displayname,p.commentcount,max(reputation) as rep from users u join posts p on u.id = p.owneruserid join comments c on c.userid = p.owneruserid group by u.displayname,p.commentcount order by rep desc;
+
+#E(i). Find the display name of user who has created maximum no. of posts on Stack Overflow.
+select u.displayname,p.owneruserid,count(*) as cid from users u join posts p on p.owneruserid = u.id group by u.displayname,p.owneruserid order by cid desc;
+
+(ii) Find the display name of user who has commented maximum no. of posts on Stack Overflow.
+select u.displayname,p.commentcount from users u join posts p on p.owneruserid = u.id group by u.displayname,p.commentcount order by p.commentcount desc;
+
+#F. Find the owner name and id of user whose post has got maximum no. of view counts so far.
+select u.displayname,u.id,p.viewcount from users u join posts p on u.id = p.owneruserid order by p.viewcount desc ;  
+
+#G(i). Find the title and owner name of the post which has maximum no. of Answer Count.
+select u.displayname,p.title,p.answercount from users u join posts p on u.id = p.owneruserid order by p.answercount desc ; 
+
+(ii) Find the title and owner name of post who has got maximum no. of Comment count. 
+select u.displayname,p.title,p.commentcount from users u join posts p on u.id = p.owneruserid where p.title != '' order by p.commentcount desc ;  
+
+#H. Find the location which has maximum no of Stack Overflow users
+select loc,count(*) as c from users group by loc order by c desc;
+
+#I. Find the total no. of answers, posts, comments created by Indian users.
+select count(p.post_type) from posts p join users u on u.id = p.owneruserid where p.posttype = 2 and u.loc == 'India';
+select count(p.id) from posts p join users u on u.id = p.owneruserid where u.loc == 'India';
+select count(*) from comments c join users u on u.id = c.userid where u.loc == 'India';

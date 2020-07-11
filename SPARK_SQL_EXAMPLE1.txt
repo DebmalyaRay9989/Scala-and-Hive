@@ -1,0 +1,193 @@
+val sqlContext = new org.apache.spark.sql.SQLContext(sc)
+import sqlContext.implicits._ 
+
+
+val airportDF = sqlContext.load("com.databricks.spark.csv", Map("path" -> "/mnt/home/edureka_918210/airline_data/Airline.csv", "header" -> "true"))
+
+airportDF.show
+
+airportDF.registerTempTable("airports")
+
+sqlContext.sql("select AirportID, Name, Latitude, Longitude from airports where Latitude<0 and Longitude>0").collect.foreach(println)
+
+
+hdfs:///bigdatapgp/common_folder/assigment6/airline_data/Airline.csv
+
+https://github.com/poonamvligade/Apache-Spark-Projects/blob/master/AirlinesProject/SparkAirlineAanalytics.md
+
+
+1.	Create partitioned tables based on the year.
+==============================================================
+
+
+
+CREATE TABLE IF NOT EXISTS AirlineAnalytics(
+ID			int,
+Year			STRING,
+Month			STRING,
+DayofMonth		STRING,
+DayOfWeek		STRING,
+DepTime			STRING,
+CRSDepTime		STRING,
+ArrTime			STRING,
+CRSArrTime		STRING, 
+UniqueCarrier		STRING,
+FlightNum		STRING,
+TailNum			STRING,
+ActualElapsedTime	STRING,
+CRSElapsedTime		STRING,
+AirTime			STRING,
+ArrDelay		STRING,
+DepDelay		STRING,
+Origin			STRING,
+Dest			STRING,
+Distance		STRING,
+Taxiin			STRING,
+TaxiOut			STRING,
+Cancelled		STRING,
+Cancellation_Code	STRING,
+Diverted		STRING,
+Carrier_Delay		STRING,
+WeatherDelay		STRING,
+NASDelay		STRING,
+Security_Delay		STRING,
+LateAircraftDelay	STRING
+)
+ROW FORMAT DELIMITED 
+FIELDS TERMINATED BY ','
+LINES TERMINATED BY '\n'
+PARTITIONED BY (Year STRING) STORED AS SEQUENCEFILE;
+
+2.	Insert data into the table created by you previously.
+
+================================================================
+
+LOAD DATA LOCAL INPATH '/mnt/home/edureka_918210/airline_data/Airline.csv' INTO TABLE AirlineAnalytics;
+
+-- PATH TO BE PROVIDED DURING TESTING
+
+3.	Compare the average arrival delay for each year.
+===============================================================
+
+select avg(ArrDelay),Year from AirlineAnalytics group by Year;
+
+4.	Compare the average arrival delay for each month
+============================================================
+
+select avg(ArrDelay),Month from AirlineAnalytics where YEAR = '2004' group by Month;
+
+5.	Compare the average taxi-in time for each year.
+========================================================
+
+select avg(Taxiin),Year from AirlineAnalytics group by Year;
+
+6.	Compare the average taxi-in time for each month.
+=========================================================
+
+select avg(Taxiin),Month from AirlineAnalytics where YEAR = '2004' group by Month;
+
+7.	Compare the average taxi-out time for each month.
+========================================================
+
+select avg(TaxiOut),Month from AirlineAnalytics where YEAR = '2004' group by Month;
+
+
+8.	Compare the average departure delay for each month.
+===============================================================
+
+select avg(DepDelay),Month from AirlineAnalytics where YEAR = '2004' group by Month;
+
+9.	Compare the time taken for partitioned and non-partitioned tables to run a SELECT * query on the complete database.
+=============================================================================================================================
+
+TIME calculation:
+
+Parititioned :
+-------------------------
+
+CREATE TABLE IF NOT EXISTS AirlineAnalytics(
+ID			int,
+Year			STRING,
+Month			STRING,
+DayofMonth		STRING,
+DayOfWeek		STRING,
+DepTime			STRING,
+CRSDepTime		STRING,
+ArrTime			STRING,
+CRSArrTime		STRING, 
+UniqueCarrier		STRING,
+FlightNum		STRING,
+TailNum			STRING,
+ActualElapsedTime	STRING,
+CRSElapsedTime		STRING,
+AirTime			STRING,
+ArrDelay		STRING,
+DepDelay		STRING,
+Origin			STRING,
+Dest			STRING,
+Distance		STRING,
+Taxiin			STRING,
+TaxiOut			STRING,
+Cancelled		STRING,
+Cancellation_Code	STRING,
+Diverted		STRING,
+Carrier_Delay		STRING,
+WeatherDelay		STRING,
+NASDelay		STRING,
+Security_Delay		STRING,
+LateAircraftDelay	STRING
+)
+ROW FORMAT DELIMITED 
+FIELDS TERMINATED BY ','
+LINES TERMINATED BY '\n'
+PARTITIONED BY (Year STRING) STORED AS SEQUENCEFILE;
+
+LOAD DATA LOCAL INPATH '/mnt/home/edureka_918210/airline_data/Airline.csv' INTO TABLE AirlineAnalytics;
+
+
+select * from AirlineAnalytics;
+
+
+TIME calculation:
+
+Non-Parititioned :
+----------------------
+CREATE TABLE IF NOT EXISTS AirlineAnalytics(
+ID			int,
+Year			STRING,
+Month			STRING,
+DayofMonth		STRING,
+DayOfWeek		STRING,
+DepTime			STRING,
+CRSDepTime		STRING,
+ArrTime			STRING,
+CRSArrTime		STRING, 
+UniqueCarrier		STRING,
+FlightNum		STRING,
+TailNum			STRING,
+ActualElapsedTime	STRING,
+CRSElapsedTime		STRING,
+AirTime			STRING,
+ArrDelay		STRING,
+DepDelay		STRING,
+Origin			STRING,
+Dest			STRING,
+Distance		STRING,
+Taxiin			STRING,
+TaxiOut			STRING,
+Cancelled		STRING,
+Cancellation_Code	STRING,
+Diverted		STRING,
+Carrier_Delay		STRING,
+WeatherDelay		STRING,
+NASDelay		STRING,
+Security_Delay		STRING,
+LateAircraftDelay	STRING
+)
+ROW FORMAT DELIMITED 
+FIELDS TERMINATED BY ','
+LINES TERMINATED BY '\n';
+
+LOAD DATA LOCAL INPATH '/mnt/home/edureka_918210/airline_data/Airline.csv' INTO TABLE AirlineAnalytics;
+
+select * from AirlineAnalytics;

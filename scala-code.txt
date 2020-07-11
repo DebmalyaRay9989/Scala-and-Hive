@@ -1,0 +1,941 @@
+// Reassignment
+
+scala> val x=10;
+x: Int = 10
+scala> x=34;
+<console>:8: error: reassignment to val
+       x=34;
+        ^
+scala> var a="Hello";
+a: String = Hello
+scala> a=a+ " World";
+a: String = Hello World
+scala> history
+<console>:8: error: not found: value history
+              history
+              ^
+scala> var s="Test";
+s: String = Test
+scala> s=10;
+<console>:8: error: type mismatch;
+ found   : Int(10)
+ required: String
+       s=10;
+         ^
+// BLock Variable
+scala> val x1={var a=10; var b=20; b*a}
+x1: Int = 200
+scala> var x2={var a=10; var b=20; b*a}
+x2: Int = 200
+
+// Lazy Loading
+
+scala> lazy val m2={print("Test1");1};
+m2: Int = <lazy>
+scala> print(m2);
+Test11
+scala> print(m1);
+1
+scala> lazy val test={print("Hey How are you")
+       12}
+test: Int = <lazy>
+scala> test
+Hey How are youres7: Int = 12
+scala> test
+res8: Int = 12
+
+// Control Statements
+
+//If
+scala> var x=10;
+x: Int = 10
+scala> if(x>0)
+       {
+       println("Positive");
+       };
+Positive
+
+//IF Else
+
+scala> var x=4;
+x: Int = 4
+scala> if(x%2==0)
+       {
+       println("positive");
+       }
+positive
+scala> if(x%2==0)
+       {
+       println("Even");
+       }else
+       {
+       println("Odd");
+       }
+Even
+
+
+// Control Statement Based Assigning
+
+scala> var x=5;
+x: Int = 5
+scala> val a=if(x>0 && x%5==0)1 else 0;
+a: Int = 1
+scala> val a=if(x>0) "positive" else 0;
+a: Any = positive
+scala> a;
+res4: Any = positive
+
+// For each
+
+scala> var name="Edureka";
+name: String = Edureka
+scala> name.foreach(x => println(x));
+E
+d
+u
+r
+e
+k
+a
+
+scala> name.foreach(println);
+E
+d
+u
+r
+e
+k
+a
+scala> val list= List(3,4,5);
+list: List[Int] = List(3, 4, 5)
+scala> list.foreach(println);
+3
+4
+5
+
+scala> val result=list.sum;
+result: Int = 12
+
+
+//FOr Loop
+// to will print till 10
+for(x <- 0 to 10)
+       {
+       println(x);
+       }
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+// until will stop at 9
+ for(x <- 0 until 10)
+       {
+       println(x);
+       }
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+
+// for with condition
+
+scala> for(i <- 1 to 3; j<- 1 to 3 if i==j)
+       {
+       println(i*10+j);
+       }
+11
+22
+33
+
+// varibale in loop
+for(i <- 1 to 3; x=4-i; j<- x to 3)
+       {
+       println(i*10+j);
+       }
+13
+22
+23
+31
+32
+33
+
+// Converting a loop to Collection
+
+var x= for (i<- 1 to 20) yield i*2.5;
+x: scala.collection.immutable.IndexedSeq[Double] = Vector(2.5, 5.0, 7.5, 10.0, 12.5, 15.0, 17.5, 20.0, 22.5, 25.0, 27.5, 30.0, 32.5, 35.0, 
+37.5, 40.0, 42.5, 45.0, 47.5, 50.0)
+scala> x.foreach(println);
+2.5
+5.0
+7.5
+10.0
+12.5
+15.0
+17.5
+20.0
+22.5
+25.0
+27.5
+30.0
+32.5
+35.0
+37.5
+40.0
+42.5
+45.0
+47.5
+50.0
+
+// While Loop 
+ 
+scala> var i=1;
+i: Int = 1
+ scala> while(i<=10)
+       {
+       println(i);
+       i=i+1;
+       }
+
+
+scala> i=1;
+i: Int = 1
+scala> while(i<=10)
+       {
+       println(i*num);
+       i=i+1;
+       }
+5
+10
+15
+20
+25
+30
+35
+40
+45
+50
+// Pattern
+scala> while(j<=5)
+       {
+           i=1;
+       while(i<=j)
+       {
+        
+       print("*\t");
+       i=i+1;
+       }
+       println("");
+       j=j+1;
+       }
+
+// do while
+
+var i=11;
+i: Int = 11
+scala> do
+       {
+       println("Value of i with condtion that i is less than 10 is "+i);
+       i+=1;
+       }
+       while(i<=10)
+Value of i with condtion that i is less than 10 is 11
+
+
+// FUnctions
+
+scala> def sayHello(name:String)
+       {
+       println("Hello "+name);
+       }
+sayHello: (name: String)Unit
+scala> sayHello("Zartab");
+Hello Zartab
+
+// return method
+
+scala> def square(num:Int): Int=
+       {
+       return num*num;
+       }
+square: (num: Int)Int
+scala> square(9);
+res1: Int = 81
+
+// Recursive Function
+
+def factorial(n:Int) : Int =
+       {
+       if (n==0) 1 else n * factorial(n-1);
+       }
+factorial: (n: Int)Int
+scala> factorial(5);
+res2: Int = 120
+
+//function in class
+
+[edureka_639001@ip-20-0-41-164 scala]$ cat> test.scala
+object Test
+{
+def main(args:Array[String]) = {
+var i=10;
+println(i);
+}
+}[edureka_639001@ip-20-0-41-164 scala]$ scalac test.scala 
+[edureka_639001@ip-20-0-41-164 scala]$ scala test
+No such file or class on classpath: test
+[edureka_639001@ip-20-0-41-164 scala]$ scala Test
+10
+
+//Function with Parameters
+
+[edureka_639001@ip-20-0-41-62 scala]$ cat > FunctionTest.scala
+object FunctionTest
+{
+def main(args:Array[String]) ={
+var a1=m1(15,12);
+var a2=m1(4);
+var a3=m1();
+println(a1+"\t"+a2+"\t"+a3);
+}
+def m1(x:Int =0, y:Int=0):Int ={                   
+return x+y;
+}
+}[edureka_639001@ip-20-0-41-62 scala]$ scalac FunctionTest.scala 
+[edureka_639001@ip-20-0-41-62 scala]$ scala FunctionTest
+27      4       0
+
+// Argument Order in passing for function
+
+scala> def diff(a:Int, b:Int):Int =
+       {
+       return b-a;
+       }
+diff: (a: Int, b: Int)Int
+scala> diff(2,3);
+res0: Int = 1
+scala> diff(b=4,a=1);
+res1: Int = 3
+
+// Nested Functions
+
+scala> [edureka_639001@ip-20-0-41-62 scala]$ cat > MaxAndMin.scala
+object MaxAndMin  
+{ 
+    // Main method 
+    def main(args: Array[String])  
+    { 
+        println("Min and Max from 5, 7") 
+                maxAndMin(5, 7); 
+    } 
+      
+    // Function 
+    def maxAndMin(a: Int, b: Int) = { 
+      
+       // Nested Function 
+       def maxValue() = {  
+          if(a > b)  
+          { 
+              println("Max is: " + a) 
+          } 
+          else
+          { 
+              println("Max is: " + b) 
+          } 
+       } 
+      
+       // Nested Function 
+       def minValue() = { 
+          if (a < b) 
+          { 
+              println("Min is: " + a) 
+          } 
+          else
+           { 
+              println("Max is: " + b) 
+          } 
+       } 
+      
+       // Nested Function 
+       def minValue() = { 
+          if (a < b) 
+          { 
+              println("Min is: " + a) 
+          } 
+          else
+          { 
+              println("Min is: " + b) 
+          } 
+       } 
+       maxValue(); 
+       minValue(); 
+    } 
+} [edureka_639001@ip-20-0-41-62 scala]$ scalac MaxAndMin.scala
+[edureka_639001@ip-20-0-41-62 scala]$ scala MaxAndMin
+Min and Max from 5, 7
+Max is: 7
+Min is: 5
+
+// Procedures
+
+ def areaOfRectangle(l:Float , b: Float)
+       {
+       var area= l*b;
+       println(area);
+       }
+areaOfRectangle: (l: Float, b: Float)Unit
+
+scala> areaOfRectangle(10.5F,5.4F);
+56.7
+
+// Collection
+
+// Array
+
+scala> var array1= Array(1,2,3,4,5,6)
+array1: Array[Int] = Array(1, 2, 3, 4, 5, 6)
+scala> array1
+res3: Array[Int] = Array(1, 2, 3, 4, 5, 6)
+
+scala> array1.foreach(println)
+1
+2
+3
+4
+5
+6
+scala> array1(4)
+
+res6: Int = 5
+scala> array1(6)
+java.lang.ArrayIndexOutOfBoundsException: 6
+
+// Fixed Length Array
+
+scala> var intArray=new Array[Int](10);
+intArray: Array[Int] = Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+scala> var strArray=new Array[String](5);
+strArray: Array[String] = Array(null, null, null, null, null)
+scala> var sArrray=Array("Hello","World");
+sArrray: Array[String] = Array(Hello, World)
+
+//ArrayBuffer
+//import needed
+scala> import scala.collection.mutable.ArrayBuffer
+import scala.collection.mutable.ArrayBuffer
+
+//initializing a buffer 
+scala> var a=new ArrayBuffer[Int]()
+a: scala.collection.mutable.ArrayBuffer[Int] = ArrayBuffer()
+
+//adding a single element
+scala> a+=1;
+res8: scala.collection.mutable.ArrayBuffer[Int] = ArrayBuffer(1)
+scala> a
+res9: scala.collection.mutable.ArrayBuffer[Int] = ArrayBuffer(1)
+
+//adding multiple elements
+scala> a+=(2,3,5);
+res10: scala.collection.mutable.ArrayBuffer[Int] = ArrayBuffer(1, 2, 3, 5)
+
+// adding an array and appending it-- when an array is appended we need to use ++
+scala> var a1=Array(7,8,90);
+a1: Array[Int] = Array(7, 8, 90)
+scala> a++=a1;
+
+res12: scala.collection.mutable.ArrayBuffer[Int] = ArrayBuffer(1, 2, 3, 5, 7, 8, 90)
+
+//append method
+scala> a.append(50)
+scala> a
+res14: scala.collection.mutable.ArrayBuffer[Int] = ArrayBuffer(1, 2, 3, 5, 7, 8, 90, 50)
+
+
+// List
+
+scala> val l=1 :: 2 :: 3 :: Nil;
+l: List[Int] = List(1, 2, 3)
+scala> val l2= List(2,3,4);
+l2: List[Int] = List(2, 3, 4)
+
+
+//Various ways of implementation of List
+
+scala> val l1= List(1,2.0F,30D,400000L)
+l1: List[Double] = List(1.0, 2.0, 30.0, 400000.0)
+scala> val l2=List.fill(3)("Edureka")
+l2: List[String] = List(Edureka, Edureka, Edureka)
+scala> var l3=List.range(1,10);
+l3: List[Int] = List(1, 2, 3, 4, 5, 6, 7, 8, 9)
+scala> var l4=List.tabulate(6)(x=> x*x)
+l4: List[Int] = List(0, 1, 4, 9, 16, 25)
+
+
+// List Buffer Operations
+
+scala> import scala.collection.mutable.ListBuffer
+import scala.collection.mutable.ListBuffer
+scala> var fruits=new ListBuffer[String]();
+fruits: scala.collection.mutable.ListBuffer[String] = ListBuffer()
+scala> fruits+="Apple";
+res15: scala.collection.mutable.ListBuffer[String] = ListBuffer(Apple)
+scala> fruits+=("Pineapple","Watermelon")
+res16: scala.collection.mutable.ListBuffer[String] = ListBuffer(Apple, Pineapple, Watermelon)
+scala> var a=Array("Mango","Orange")
+a: Array[String] = Array(Mango, Orange)
+scala> fruits++=a
+res17: scala.collection.mutable.ListBuffer[String] = ListBuffer(Apple, Pineapple, Watermelon, Mango, Orange)
+scala> fruits.append("Muskmelon")
+scala> fruits
+res19: scala.collection.mutable.ListBuffer[String] = ListBuffer(Apple, Pineapple, Watermelon, Mango, Orange, Muskmelon)
+scala> fruits-=("Apple","Kiwi")
+res20: scala.collection.mutable.ListBuffer[String] = ListBuffer(Pineapple, Watermelon, Mango, Orange, Muskmelon)
+scala> var fruitList=fruits.toList
+fruitList: List[String] = List(Pineapple, Watermelon, Mango, Orange, Muskmelon)
+
+// List Operations
+
+scala> val x= List(3)
+x: List[Int] = List(3)
+scala> val y= 1 :: 2 ::x
+y: List[Int] = List(1, 2, 3)
+scala> val z= -1::y
+z: List[Int] = List(-1, 1, 2, 3)
+
+// Filtering List
+
+scala> val list= List(10,9,8,7,6,5,4,3,2,1);
+list: List[Int] = List(10, 9, 8, 7, 6, 5, 4, 3, 2, 1)
+scala> val newList= list.filter(_>4);
+newList: List[Int] = List(10, 9, 8, 7, 6, 5)
+
+
+// Merging List
+scala> var list1= List(1,2,3)
+list1: List[Int] = List(1, 2, 3)
+scala> var list2=List(4,5,6)
+list2: List[Int] = List(4, 5, 6)
+scala> var list3=list1 ++ list2;
+list3: List[Int] = List(1, 2, 3, 4, 5, 6)
+scala> var list4= list1 :: list2;
+list4: List[Any] = List(List(1, 2, 3), 4, 5, 6)
+scala> var list4= list1 ::: list2;
+list4: List[Int] = List(1, 2, 3, 4, 5, 6)
+scala> var list5= List.concat(list1,list2);
+list5: List[Int] = List(1, 2, 3, 4, 5, 6)
+
+// Head and Tail
+scala> list4.head
+res21: Int = 1
+scala> list4.tail
+res22: List[Int] = List(2, 3, 4, 5, 6)
+
+// Tuple
+
+scala> val a= (1,4,"Tom","Jerry")
+a: (Int, Int, String, String) = (1,4,Tom,Jerry)
+scala> a._2
+res23: Int = 4
+scala> a._3
+res24: String = Tom
+scala> a _4
+warning: there were 1 feature warning(s); re-run with -feature for details
+res25: String = Jerry
+
+// Tuple Operations
+
+scala> val ab=(1,2,3,4)
+ab: (Int, Int, Int, Int) = (1,2,3,4)
+scala> ab.productIterator.foreach{ i=> println("Value of i is "+i)}
+Value of i is 1
+Value of i is 2
+Value of i is 3
+Value of i is 4
+
+//to String
+scala> val tuple=(1, "Test", 13.4F)
+tuple: (Int, String, Float) = (1,Test,13.4)
+scala> println(tuple.toString())
+(1,Test,13.4)
+
+// Swap Function
+scala> var a= ("a","b")
+a: (String, String) = (a,b)
+scala> var b=a.swap
+b: (String, String) = (b,a)
+scala> var a= ("a","b","c")
+a: (String, String, String) = (a,b,c)
+scala> var c= a.swap
+<console>:10: error: value swap is not a member of (String, String, String)
+       var c= a.swap
+
+// Set Operations
+scala> var fruits=Set("Apple","Banana","Mango","Banana","Orange")
+fruits: scala.collection.immutable.Set[String] = Set(Apple, Banana, Mango, Orange)
+scala> fruits.head
+res29: String = Apple
+scala> fruits.tail
+res30: scala.collection.immutable.Set[String] = Set(Banana, Mango, Orange)
+scala> fruits.isEmpty
+res31: Boolean = false
+
+// Concatenating Sets
+
+scala> var s1=Set(1,2,3)
+s1: scala.collection.immutable.Set[Int] = Set(1, 2, 3)
+scala> var s2=Set(4,5,6)
+s2: scala.collection.immutable.Set[Int] = Set(4, 5, 6)
+scala> var s3= s1 ++ s2;
+s3: scala.collection.immutable.Set[Int] = Set(5, 1, 6, 2, 3, 4)
+scala> var s4= s1.++(s2);
+s4: scala.collection.immutable.Set[Int] = Set(5, 1, 6, 2, 3, 4)
+
+
+// Finding common values
+
+scala> var a= Set(1,2,3,4)
+a: scala.collection.immutable.Set[Int] = Set(1, 2, 3, 4)
+scala> var b=Set(5,4,3,6)
+b: scala.collection.immutable.Set[Int] = Set(5, 4, 3, 6)
+scala> a.&(b)
+res32: scala.collection.immutable.Set[Int] = Set(3, 4)
+scala> a.intersect(b)
+res33: scala.collection.immutable.Set[Int] = Set(3, 4)
+
+// Map
+
+scala> val map=Map("Sachin"->"Cricket","Messi"->"Football","Roger"->"Tennis")
+map: scala.collection.immutable.Map[String,String] = Map(Sachin -> Cricket, Messi -> Football, Roger -> Tennis)
+scala> map.keys.foreach{i => println(i+" plays "+map(i))}
+Sachin plays Cricket
+Messi plays Football
+Roger plays Tennis
+
+scala> map.contains("Sachin")
+res35: Boolean = true
+scala> map.contains("Cricket")
+res36: Boolean = false
+scala> map.contains("Roger")
+res37: Boolean = true
+
+
+// Class
+
+scala> class Pen{
+      var inkLevel=0;
+      }
+defined class Pen
+scala> var p = new Pen();
+p: Pen = Pen@6fdb1f78
+
+scala> p.inkLevel=10;
+p.inkLevel: Int = 10
+scala> p.inkLevel
+res2: Int = 10
+scala> p.inkLevel_=(90)
+scala> p.inkLevel
+res4: Int = 90
+
+// Counter Class
+
+scala> class Counter{
+      private var value=1;
+      
+      def increment()
+      {
+      value+=1;
+      }
+      
+      def current =value;
+      
+      }
+defined class Counter
+scala> var c=new Counter
+c: Counter = Counter@128d2484
+scala> c.increment
+scala> c.current
+res9: Int = 2
+scala> c.current
+res10: Int = 2
+scala> c.increment
+scala> c.current
+res12: Int = 3
+
+
+//Case Class
+
+scala> case class Student(name:String, year:Int)
+defined class Student
+scala> val s=Student("Zartab",20)
+s: Student = Student(Zartab,20)
+scala> s.
+asInstanceOf      canEqual          copy              isInstanceOf      name              productArity      productElement    
+productIterator   productPrefix     toString          year              
+scala> s.name
+res0: String = Zartab
+scala> s.name="Zartab 1";
+<console>:10: error: reassignment to val
+       s.name="Zartab 1";
+             
+
+// Case Class and Pattern matching
+scala> trait Person{
+      def name:String
+      }
+defined trait Person
+scala> case class Student(name:String, year:Int) extends Person
+defined class Student
+scala> case class Trainer(name:String, speciality:String) extends Person
+defined class Trainer
+
+
+scala> val s=Student("Tom",15)
+s: Student = Student(Tom,15)
+scala> val t=Trainer("Zartab","Big Data")
+t: Trainer = Trainer(Zartab,Big Data)
+
+
+scala> def getPrintableString(p:Person): String=
+      p match
+      {
+      case Student(name,year) =>
+      s"$name is studying in year $year";
+      case Trainer(name,domain) =>
+      s"$name trains $domain"
+      }
+getPrintableString: (p: Person)String
+scala> getPrintableString(t)
+res3: String = Zartab trains Big Data
+scala> getPrintableString(s)
+res4: String = Tom is studying in year 15
+
+//Inheritance
+
+class Vehicle(speed:Int)
+defined class Vehicle
+
+
+class Car(name:String, speed:Int) extends Vehicle(speed){
+            val mySpeed:Int=speed;
+            
+            override def race()=println(name+" is racing at "+speed+" mph");
+      }
+defined class Car
+scala> val c=new Car("Ferrari",200);
+c: Car = Car@66d57c1b
+scala> c.race()
+Ferrari is racing at 200 mph
+scala> c.mph
+res7: Int = 200
+
+class Bike(name:String, speed:Int) extends Vehicle(speed){
+            val mySpeed:Int=speed;
+            
+            override def race()=println(name+" is racing at "+speed+" mph");
+      }
+
+
+// Traits
+
+scala> trait Iterator[A]{
+      def hasNext():Boolean
+      def next():A
+      }
+defined trait Iterator
+scala> class IntIterator(to:Int) extends Iterator[Int]{
+      var current=0;
+      
+      override def hasNext():Boolean = current<to;
+      
+      override def next():Int={
+      if(hasNext())
+      {
+      val t=current;
+      current+=1;
+      t
+      }
+      else 0;
+      }
+      }
+defined class IntIterator
+scala> val iterator=new IntIterator(10);
+iterator: IntIterator = IntIterator@49aa766b
+
+scala> iterator.next()
+res8: Int = 0
+scala> iterator.next()
+res9: Int = 1
+scala> iterator.next()
+res10: Int = 2
+scala> iterator.next()
+res11: Int = 3
+
+// Layered and with Trait
+
+scala> trait Human{
+      def hello="Hello from Human";
+      }
+defined trait Human
+
+scala> trait Mother extends Human{
+      override def hello="Hello from Mom"
+      }
+defined trait Mother
+scala> trait Father extends Human{
+      override def hello="Hello from Dad"
+      }
+defined trait Father
+scala> class Child extends Human with Mother with Father
+defined class Child
+scala> class Child extends Human with Father with Mother{
+      def printSuper= super.hello;
+      def printMom=super[Mother].hello
+      def printDad=super[Father].hello
+       def printHuman=super[Human].hello
+      }
+defined class Child
+scala> var c=new Child()
+c: Child = Child@6ba7383d
+scala> c.printSuper
+res20: String = Hello from Dad
+scala> c.printMom
+res21: String = Hello from Mom
+scala> c.printDad
+res22: String = Hello from Dad
+scala> c.printHuman
+res23: String = Hello from Human
+
+trait Animal {
+ def walk { println("Animal is walking") }
+}
+class FourLeggedAnimal extends Animal {
+ override def walk { println("I'm walking on all fours") }
+}
+class Dog extends FourLeggedAnimal {
+ def walkThenRun {
+ super.walk // works
+ super[FourLeggedAnimal].walk // works
+ super[Animal].walk // error: won't compile
+ }
+}
+
+// High Order Functions
+
+scala> val salaries=List(2000,4000,7000);
+salaries: List[Int] = List(2000, 4000, 7000)
+scala> val doubleSalaries=(x:Int)=>x*2;
+doubleSalaries: Int => Int = <function1>
+scala> val newSalaries=salaries.map(doubleSalaries)
+newSalaries: List[Int] = List(4000, 8000, 14000)
+scala> val newSal1=salaries.map(x=>x*2)
+newSal1: List[Int] = List(4000, 8000, 14000)
+scala> val newSal2=salaries.map(_*2)
+newSal2: List[Int] = List(4000, 8000, 14000)
+
+// Passing method as argument
+
+scala> case class WeeklyForecast(temps:List[Double]){
+      
+      def convertCtoF(temp:Double)= temp*1.8+32;
+      
+      
+You typed two blank lines.  Starting a new command.
+scala> case class WeeklyForecast(temps:List[Double]){
+      def convertCtoF(temp:Double)= temp*1.8+32;
+      
+      def forecastInFH:List[Double]=temps.map(convertCtoF);
+      }
+defined class WeeklyForecast
+scala> var l=List(23.8D,26,3D,30.5D)
+l: List[Double] = List(23.8, 26.0, 3.0, 30.5)
+scala> var w=new WeeklyForecast(l)
+w: WeeklyForecast = WeeklyForecast(List(23.8, 26.0, 3.0, 30.5))
+scala> w.forecastInFH
+res31: List[Double] = List(74.84, 78.80000000000001, 37.4, 86.9)
+
+// High Order Function
+
+Consider a scenario
+
+object SalaryRaiser {
+
+  def smallPromotion(salaries: List[Double]): List[Double] =
+    salaries.map(salary => salary * 1.1)
+
+  def greatPromotion(salaries: List[Double]): List[Double] =
+    salaries.map(salary => salary * math.log(salary))
+
+  def hugePromotion(salaries: List[Double]): List[Double] =
+    salaries.map(salary => salary * salary)
+}
+
+scala> var l=List(500000.00D,34500.00D,39000.0D,30000.0D)
+l: List[Double] = List(500000.0, 34500.0, 39000.0, 30000.0)
+scala> SalaryRaiser.smallPromotion(l)
+res32: List[Double] = List(550000.0, 37950.0, 42900.0, 33000.0)
+scala> SalaryRaiser.greatPromotion(l)
+res33: List[Double] = List(6561181.688702164, 360480.6538041711, 412281.36007935955, 309268.5798193288)
+scala> SalaryRaiser.hugePromotion(l)
+res34: List[Double] = List(2.5E11, 1.19025E9, 1.521E9, 9.0E8)
+
+to calculate promotion, code is getting redundant
+
+// Function that rutuens functions
+
+scala> def urlBuilder(ssl: Boolean, domainName: String): (String, String) => String = {
+        val schema = if (ssl) "https://" else "http://"
+        (endpoint: String, query: String) => s"$schema$domainName/$endpoint?$query"
+      }
+urlBuilder: (ssl: Boolean, domainName: String)(String, String) => String
+scala> 
+scala> val domainName = "www.example.com"
+domainName: String = www.example.com
+scala> def getURL = urlBuilder(ssl=true, domainName)
+getURL: (String, String) => String
+scala> val endpoint = "users"
+endpoint: String = users
+scala> val query = "id=1"
+query: String = id=1
+scala> val url = getURL(endpoint, query)
+url: String = https://www.example.com/users?id=1
+
+// Anonymous Functions
+
+scala> (1 to 9).map(0.1 * _)
+res37: scala.collection.immutable.IndexedSeq[Double] = Vector(0.1, 0.2, 0.30000000000000004, 0.4, 0.5, 0.6000000000000001, 0.70000000000000
+01, 0.8, 0.9)
+scala> 
+scala> (1 to 9).map("*" * _).foreach(println _)
+*
+**
+***
+****
+*****
+******
+*******
+********
+*********
+scala> (1 to 9).filter(_ % 2 == 0)
+res39: scala.collection.immutable.IndexedSeq[Int] = Vector(2, 4, 6, 8)
+scala> 
+scala> (1 to 9).reduceLeft(_ * _)
+res40: Int = 362880
+scala> 
+scala> "Mary had a little lamb".split(" ").sortWith(_.length < _.length)
+res41: Array[String] = Array(a, had, Mary, lamb, little)
+
+
+
+

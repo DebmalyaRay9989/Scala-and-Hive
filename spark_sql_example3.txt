@@ -1,0 +1,47 @@
+
+
+val sqlContext = new org.apache.spark.sql.SQLContext(sc)
+import sqlContext.implicits._
+
+1.	Load the dataset into a DataFrame and print its schema 
+=================================================================
+
+val airportDF = sqlContext.load("com.databricks.spark.csv", Map("path" -> "/mnt/home/edureka_918210/airline_data/Airline.csv", "header" -> "true"))
+
+airportDF.show
+
+airportDF.registerTempTable("airports")
+
+
+2.	Find out how many airports are there in the Southeast part in the dataset?
+===================================================================================
+
+sqlContext.sql("select AirportID, Name, Latitude, Longitude from airports where Latitude<0 and Longitude>0").collect.foreach(println)
+
+3.	Find out how many unique cities have airports in each country
+======================================================================
+
+sqlContext.sql("select Country, count(distinct(City)) from airports group by Country").collect.foreach(println)
+
+
+4.	What is the average Altitude (in feet) of airports in each Country?
+==============================================================================
+
+sqlContext.sql("select Country , avg(Altitude) from airports group by Country").collect
+
+
+5.	Find out in each timezone how many airports are operating?
+==================================================================
+
+sqlContext.sql("select Tz , count(Tz) from airports group by Tz").collect.foreach(println)
+
+6.	Calculate average latitude and longitude for these airports in each country
+========================================================================================
+
+sqlContext.sql("select Country, avg(Latitude), avg(Longitude) from airports group by Country").collect.foreach(println)
+
+7.	Count how many different DSTs are there?
+================================================
+
+ sqlContext.sql("select count(distinct(DST)) from airports").collect.foreach(println)
+
