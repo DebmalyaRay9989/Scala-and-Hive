@@ -1,0 +1,177 @@
+
+
+
+CREATE TABLE IF NOT EXISTS employee ( 
+employee_id int, 
+first_name VARCHAR(20), 
+last_name VARCHAR(25), 
+email VARCHAR(25), 
+phone_number VARCHAR(20), 
+hire_date varchar(12), 
+job_id VARCHAR(10), 
+salary decimal, 
+commission_pct decimal(2,2), 
+manager_id int, 
+department_id int, 
+start_date string, 
+end_date string
+
+)
+COMMENT ‘employee details’
+PARTITIONED BY(employee_id int)
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ‘,’
+LINES TERMINATED BY ‘\n’
+STORED AS ORC;
+
+
+
+sqoop import --connect jdbc:mysql://sqoopdb.edu.cloudlab.com/userdb --username edureka_918210 --password edureka_918210xyqij --table employee –m 1 --target-dir ‘/mnt/home/edureka_918210/employee’;
+
+
+======================================================================================================================================================================================================
+
+CREATE TABLE IF NOT EXISTS departments ( 
+department_id int, 
+department_name VARCHAR(20), 
+manager_id int, 
+location_id int
+)
+COMMENT ‘department details’
+PARTITIONED BY(department_id int)
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ‘,’
+LINES TERMINATED BY ‘\n’
+STORED AS ORC;
+
+sqoop import --connect jdbc:mysql://sqoopdb.edu.cloudlab.com/userdb --username edureka_918210 --password edureka_918210xyqij --table departments –m 1 --target-dir ‘/mnt/home/edureka_918210/departments’;
+
+======================================================================================================================================================================================================
+
+CREATE TABLE IF NOT EXISTS locations ( 
+location_id int, 
+street_address VARCHAR(20), 
+postal_code int, 
+city VARCHAR(20),
+state_province VARCHAR(20),
+country_id int
+)
+COMMENT ‘locations details’
+PARTITIONED BY(location_id int)
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ‘,’
+LINES TERMINATED BY ‘\n’
+STORED AS ORC;
+
+sqoop import --connect jdbc:mysql://sqoopdb.edu.cloudlab.com/userdb --username edureka_918210 --password edureka_918210xyqij --table locations –m 1 --target-dir ‘/mnt/home/edureka_918210/locations’;
+
+======================================================================================================================================================================================================
+
+CREATE TABLE IF NOT EXISTS jobs ( 
+job_id int, 
+job_title VARCHAR(20), 
+min_salary int, 
+max_salary int
+)
+COMMENT ‘jobs details’
+PARTITIONED BY(job_id int)
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ‘,’
+LINES TERMINATED BY ‘\n’
+STORED AS ORC;
+
+sqoop import --connect jdbc:mysql://sqoopdb.edu.cloudlab.com/userdb --username edureka_918210 --password edureka_918210xyqij --table jobs –m 1 --target-dir ‘/mnt/home/edureka_918210/jobs’;
+
+======================================================================================================================================================================================================
+
+
+CREATE TABLE IF NOT EXISTS regions ( 
+Region_id int, 
+Region_name VARCHAR(20)
+)
+COMMENT ‘regions details’
+PARTITIONED BY(Region_id int)
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ‘,’
+LINES TERMINATED BY ‘\n’
+STORED AS ORC;
+
+sqoop import --connect jdbc:mysql://sqoopdb.edu.cloudlab.com/userdb --username edureka_918210 --password edureka_918210xyqij --table regions –m 1 --target-dir ‘/mnt/home/edureka_918210/regions’;
+
+========================================================================================================================================================================================================
+
+CREATE TABLE IF NOT EXISTS countries ( 
+Country_id int, 
+Country_name VARCHAR(20), 
+Region_id int
+)
+COMMENT ‘countries details’
+PARTITIONED BY(Country_id int)
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ‘,’
+LINES TERMINATED BY ‘\n’
+STORED AS ORC;
+
+sqoop import --connect jdbc:mysql://sqoopdb.edu.cloudlab.com/userdb --username edureka_918210 --password edureka_918210xyqij --table countries –m 1 --target-dir ‘/mnt/home/edureka_918210/countries’;
+
+========================================================================================================================================================================================================
+
+CREATE TABLE employees_scd
+   ( employee_id int
+   , first_name VARCHAR(20)
+   , last_name VARCHAR(25)
+   , email VARCHAR(25)
+   , phone_number VARCHAR(20)
+   , hire_date varchar(12)
+   , job_id VARCHAR(10)
+   , salary decimal
+   , commission_pct decimal(2,2)
+   , manager_id int
+   , department_id int
+   , start_date string
+   , end_date string
+   , active_flag char(1)
+   , row_insertion_dttm string
+   ) COMMENT ‘countries details’
+PARTITIONED BY(employee_id int)
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ‘,’
+LINES TERMINATED BY ‘\n’
+STORED AS TEXTFILE;
+
+========================================================================================================================================================================================================
+
+
+
+load data inpath 'bigdatapgp/common_folder/assignment8/emp_details/Employeedelta.txt' into table employees_scd;
+
+
+========================================================================================================================================================================================================
+
+2.	Updated Employee Detail Table in MySQL:
+
+CREATE table edureka_dw.employee_details_latest
+   (employee_id int,
+   job_id varchar(10),
+   manager_id int,
+   department_id int,
+   location_id int,
+   country_id char(2),
+   first_name varchar(20),
+   last_name varchar(25),
+   salary decimal,
+   commission_pct decimal(2,2),
+   department_name varchar(30),
+   job_title varchar(35),
+   city varchar(30),
+   state_province varchar(25),
+   country_name varchar(40),
+   region_name varchar(25)
+   );
+
+========================================================================================================================================================================================================
+
+sqoop export --connect jdbc:mysql://sqoopdb.edu.cloudlab.com/userdb --username edureka_918210 --password edureka_918210xyqij --table employee_details_latest –m 1 –export-dir '/sqoop_msql/' ;
+
+========================================================================================================================================================================================================
+
